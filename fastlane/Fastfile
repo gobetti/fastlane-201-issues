@@ -18,12 +18,21 @@ default_platform(:ios)
 platform :ios do
   desc "Description of what the lane does"
   lane :test do
-    FileUtils.rm_rf('test_output')
+    output_directory = 'test_output'
+    FileUtils.rm_rf(output_directory)
     scan(
-      output_types: 'junit',
+      output_types: '',
+      output_directory: output_directory,
+      result_bundle: true,
       fail_build: false
     )
     UI.message '✅  scan succeeded'
+    trainer(
+      path: output_directory,
+      output_directory: output_directory,
+      fail_build: false
+    )
+    UI.message '✅  trainer succeeded'
     puts `cat test_output/report.junit`
   end
 end
