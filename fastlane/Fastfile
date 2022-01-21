@@ -19,12 +19,16 @@ platform :ios do
   desc "Description of what the lane does"
   lane :test do
     FileUtils.rm_rf('test_output')
-    scan(
-      devices: ['iPhone 13', 'iPhone 13 Pro Max'],
-      output_types: 'junit',
-      fail_build: false
-    )
-    UI.message '✅  scan succeeded'
-    puts `cat test_output/report.junit`
+    begin
+      scan(
+        devices: ['iPhone 13', 'iPhone 13 Pro Max'],
+        output_types: 'junit',
+        fail_build: false
+      )
+      UI.message '✅  scan succeeded'
+      puts `cat test_output/report.junit`
+    rescue StandardError => e
+      UI.error "❌ scan failed, exception backtrace: #{e.backtrace}"
+    end
   end
 end
