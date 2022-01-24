@@ -21,9 +21,9 @@ platform :ios do
     FileUtils.rm_rf('test_output')
     scan(
       output_types: 'junit',
-      fail_build: false
+      fail_build: false,
+      number_of_retries: 2
     )
-    UI.message '✅  scan succeeded'
     puts `cat test_output/report.junit`
   end
 end

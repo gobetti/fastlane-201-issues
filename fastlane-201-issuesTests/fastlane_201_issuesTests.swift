@@ -8,10 +8,15 @@
 import XCTest
 @testable import fastlane_201_issues
 
+var iterations = 0
+
 class fastlane_201_issuesTests: XCTestCase {
 
     func testExample() throws {
-        XCTFail()
+        iterations += 1
+        if iterations < 3 {
+            XCTFail("Fail before the 3rd iteration")
+        }
     }
 
 }
